@@ -1,129 +1,73 @@
+/**
+ * This is the frontend (browser) JavaScript for the Merge PDF tool.
+ * It handles form submission, file validation, and API communication.
+ */
 document.addEventListener('DOMContentLoaded', () => {
+    // --- IMPORTANT ---
+    // Change this URL to your live Render backend URL
+    // You get this *after* your backend is successfully deployed.
+    const API_URL = 'https://cori-api.onrender.com/api/merge'; // <-- *** EDIT THIS ***
 
-    // =========================================================================
-    // == CRITICAL: SET YOUR BACKEND API URL HERE ==
-    // =========================================================================
-    // This is the URL you get after deploying your backend to Render.
-    // Example: "https://cori-api.onrender.com/api/merge"
-    //
-    // For local testing (if you run 'node server.js' locally):
-    // const API_URL = 'http://localhost:3001/api/merge';
-    //
-    // For production (after deploying backend to Render):
-    const API_URL = 'https://cori-tools.onrender.com/api/merge';
-    // =========================================================================
-
-
-    // --- Get DOM Elements ---
-    const form = document.getElementById('merge-form');
+    const toolForm = document.getElementById('tool-form');
     const fileInput = document.getElementById('file-input');
-    const dropZone = document.querySelector('.drop-zone');
-    const fileListDiv = document.getElementById('file-list');
-    const mergeButton = document.getElementById('merge-button');
-    const loadingSpinner = document.getElementById('loading-spinner');
-    const errorMessageDiv = document.getElementById('error-message');
+    const fileListDisplay = document.getElementById('file-list-display');
+    const submitButton = document.getElementById('submit-button');
+    const statusMessage = document.getElementById('status-message');
+    const downloadButton = document.getElementById('download-button');
 
     let uploadedFiles = []; // To store the File objects
 
-    // --- Helper Functions ---
+    // --- 1. Handle File Input ---
+    fileInput.addEventListener('change', () => {
+        // Clear previous files and list
+        uploadedFiles = [];
+        fileListDisplay.innerHTML = '';
+        statusMessage.textContent = '';
+        downloadButton.classList.add('hidden');
 
-    /**
-     * Updates the file list UI based on the 'uploadedFiles' array
-     */
-    function updateFileList() {
-        fileListDiv.innerHTML = ''; // Clear current list
-
-        if (uploadedFiles.length === 0) {
-            fileListDiv.innerHTML = '<p class="text-slate-500 text-center">No files selected.</p>';
-        } else {
-            uploadedFiles.forEach((file, index) => {
-                const fileElement = document.createElement('div');
-                fileElement.className = 'p-3 bg-slate-100 rounded-lg flex items-center justify-between';
-                
-                // File name and size
-                fileElement.innerHTML = `
-                    <div class="flex items-center">
-                        <i data-lucide="file-text" class="w-5 h-5 text-blue-500 mr-3"></i>
-                        <span class="font-medium text-slate-700">${file.name}</span>
-                        <span class="text-slate-500 ml-2">(${(file.size / 1024 / 1024).toFixed(2)} MB)</span>
-                    </div>
-                `;
-                
-                // Remove button
-                const removeBtn = document.createElement('button');
-                removeBtn.innerHTML = '<i data-lucide="x" class="w-5 h-5 text-red-500 hover:text-red-700"></i>';
-                removeBtn.onclick = () => {
-                    removeFile(index);
-                };
-                fileElement.appendChild(removeBtn);
-
-                fileListDiv.appendChild(fileElement);
-            });
-        }
-        
-        // Re-initialize icons
-        if (typeof lucide !== 'undefined') {
-            lucide.createIcons();
+        if (fileInput.files.length > 0) {
+            for (const file of fileInput.files) {
+                // We only accept PDFs
+                if (file.type === 'application/pdf') {
+                    uploadedFiles.push(file);
+                    const listItem = document.createElement('div');
+                    listItem.className = 'file-item';
+                    listItem.textContent = file.name;
+                    fileListDisplay.appendChild(listItem);
+                } else {
+                    // Show a warning for non-PDF files
+                    const errorItem = document.createElement('div');
+                    errorItem.className = 'file-item-error';
+                    errorItem.textContent = `${file.name} (Not a PDF, will be skipped)`;
+                    fileListDisplay.appendChild(errorItem);
+                }
+            }
         }
 
-        // Enable/disable merge button
-        mergeButton.disabled = uploadedFiles.length < 2;
-    }
-
-    /**
-     * Removes a file from the 'uploadedFiles' array and updates the UI
-     * @param {number} index - The index of the file to remove
-     */
-    function removeFile(index) {
-        uploadedFiles.splice(index, 1);
-        updateFileList();
-        // Update the file input's files property (this is a bit of a hack)
-        const dataTransfer = new DataTransfer();
-        uploadedFiles.forEach(file => dataTransfer.items.add(file));
-        fileInput.files = dataTransfer.files;
-    }
-
-    /**
-     * Shows/hides the loading spinner
-     * @param {boolean} isLoading 
-     */
-    function setLoading(isLoading) {
-        if (isLoading) {
-            loadingSpinner.classList.remove('hidden');
-            mergeButton.classList.add('hidden');
-            errorMessageDiv.classList.add('hidden');
-        } else {
-            loadingSpinner.classList.add('hidden');
-            mergeButton.classList.remove('hidden');
-        }
-    }
-
-    /**
-     * Shows an error message
-     * @param {string} message 
-     */
-    function showError(message) {
-        errorMessageDiv.textContent = message;
-        errorMessageDiv.classList.remove('hidden');
-    }
-
-    // --- Event Listeners ---
-
-    // 1. Form Submission
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault(); // Stop default form submission
-        
+        // Show/hide submit button
         if (uploadedFiles.length < 2) {
-            showError('You must upload at least two PDF files to merge.');
-            return;
+            submitButton.classList.add('opacity-50', 'cursor-not-allowed');
+            submitButton.disabled = true;
+            if (uploadedFiles.length > 0) {
+                showStatus('You must select at least two PDF files to merge.', 'error');
+            }
+        } else {
+            submitButton.classList.remove('opacity-50', 'cursor-not-allowed');
+            submitButton.disabled = false;
         }
-        
-        if (API_URL.includes('your-render-backend-url.onrender.com')) {
-            showError('Developer Error: Please update the API_URL in script.js before deploying.');
+    });
+
+    // --- 2. Handle Form Submission ---
+    toolForm.addEventListener('submit', async (e) => {
+        e.preventDefault(); // Stop the form from submitting normally
+
+        if (uploadedFiles.length < 2) {
+            showStatus('You need at least two PDF files to merge.', 'error');
             return;
         }
 
-        setLoading(true);
+        // Show loading state
+        showLoading(true);
 
         // Create FormData to send files
         const formData = new FormData();
@@ -132,102 +76,75 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         try {
-            // Send files to the backend
+            // Make the API call
             const response = await fetch(API_URL, {
                 method: 'POST',
-                body: formData,
+                body: formData, // No 'Content-Type' header needed; 'fetch' sets it for FormData
             });
 
             if (!response.ok) {
-                // If response is not 2xx, get error text
+                // Handle server errors
                 const errorText = await response.text();
-                throw new Error(errorText || 'Server error occurred.');
+                throw new Error(`Server error: ${response.status} ${response.statusText}. ${errorText}`);
             }
 
-            // Get the merged PDF as a blob
-            const blob = await response.blob();
+            // Get the merged file as a 'blob'
+            const mergedPdfBlob = await response.blob();
 
-            // Create a temporary URL and trigger download
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.style.display = 'none';
-            a.href = url;
-            // Get filename from response header, or use a default
-            const disposition = response.headers.get('content-disposition');
-            let filename = 'merged_by_CORi.pdf';
-            if (disposition && disposition.indexOf('attachment') !== -1) {
-                const filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
-                const matches = filenameRegex.exec(disposition);
-                if (matches != null && matches[1]) {
-                    filename = matches[1].replace(/['"]/g, '');
-                }
-            }
-            a.download = filename;
+            // --- 3. Handle Successful Download ---
+            showStatus('Files merged successfully! Your download is ready.', 'success');
             
-            document.body.appendChild(a);
-            a.click();
-            window.URL.revokeObjectURL(url);
-            a.remove();
+            // Create a temporary URL for the blob
+            const downloadUrl = URL.createObjectURL(mergedPdfBlob);
             
-            // Reset form
-            uploadedFiles = [];
-            fileInput.value = '';
-            updateFileList();
+            // Show the download button
+            downloadButton.href = downloadUrl;
+            downloadButton.download = 'cori-merged.pdf'; // The default filename
+            downloadButton.classList.remove('hidden');
 
-        } catch (err) {
-            console.error('Fetch error:', err);
-            showError(`Error: ${err.message}`);
+        } catch (error) {
+            console.error('Fetch error:', error);
+            showStatus(`An error occurred: ${error.message}`, 'error');
         } finally {
-            setLoading(false);
+            // Stop loading state
+            showLoading(false);
         }
     });
 
-    // 2. File Input Change (handles 'Choose Files' button)
-    fileInput.addEventListener('change', () => {
-        uploadedFiles = Array.from(fileInput.files);
-        updateFileList();
-    });
+    // --- Helper Functions ---
 
-    // 3. Drag and Drop Listeners
-    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-        dropZone.addEventListener(eventName, (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-        });
-    });
-
-    ['dragenter', 'dragover'].forEach(eventName => {
-        dropZone.addEventListener(eventName, () => {
-            dropZone.classList.add('drag-over');
-        });
-    });
-
-    ['dragleave', 'drop'].forEach(eventName => {
-        dropZone.addEventListener(eventName, () => {
-            dropZone.classList.remove('drag-over');
-        });
-    });
-
-    dropZone.addEventListener('drop', (e) => {
-        const dataTransfer = new DataTransfer();
-        // Add existing files
-        uploadedFiles.forEach(file => dataTransfer.items.add(file));
-        
-        // Add new (dropped) files, filtering for PDFs
-        if (e.dataTransfer.files) {
-            Array.from(e.dataTransfer.files).forEach(file => {
-                if (file.type === 'application/pdf') {
-                    dataTransfer.items.add(file);
-                }
-            });
+    function showStatus(message, type = 'info') {
+        statusMessage.textContent = message;
+        statusMessage.className = 'text-sm mt-4'; // Reset classes
+        if (type === 'error') {
+            statusMessage.classList.add('text-red-500');
+        } else if (type === 'success') {
+            statusMessage.classList.add('text-green-500');
+        } else {
+            statusMessage.classList.add('text-gray-500');
         }
-        
-        // Update both the input and our internal array
-        fileInput.files = dataTransfer.files;
-        uploadedFiles = Array.from(fileInput.files);
-        updateFileList();
-    });
+    }
 
-    // --- Initial Call ---
-    updateFileList(); // Show "No files selected" on page load
+    function showLoading(isLoading) {
+        if (isLoading) {
+            submitButton.disabled = true;
+            submitButton.classList.add('opacity-50', 'cursor-not-allowed');
+            submitButton.innerHTML = `
+                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Merging...
+            `;
+            statusMessage.textContent = 'Uploading and processing your files...';
+            statusMessage.className = 'text-sm mt-4 text-blue-500';
+            downloadButton.classList.add('hidden');
+        } else {
+            submitButton.disabled = false;
+            submitButton.classList.remove('opacity-50', 'cursor-not-allowed');
+            submitButton.innerHTML = 'Merge PDFs';
+        }
+    }
+
 });
+
