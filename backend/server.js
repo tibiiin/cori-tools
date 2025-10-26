@@ -1,7 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const multer = require('multer');
-const mergePdfs = require('./api/merge'); // Import the merge logic
+// FIX IS HERE: Deconstruct the 'mergePdfs' function from the imported module
+const { mergePdfs } = require('./api/merge'); 
 
 const app = express();
 const port = process.env.PORT || 3001; // Render will set the PORT env variable
@@ -33,9 +34,11 @@ app.get('/', (req, res) => {
 
 // The 'merge' endpoint
 // It expects files to be sent under the field name 'files'
+// AND FIX IS HERE: We are now passing the 'mergePdfs' function, not the object
 app.post('/api/merge', upload.array('files'), mergePdfs);
 
 // === Start Server ===
 app.listen(port, () => {
     console.log(`Server listening on port ${port}`);
 });
+
