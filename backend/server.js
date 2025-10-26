@@ -10,7 +10,11 @@ const port = process.env.PORT || 3001; // Render will set the PORT env variable
 // === Middleware ===
 // 1. Enable CORS for all routes
 // This is crucial to allow your Vercel frontend to call your Render backend
-app.use(cors());
+// --- 1. Enable CORS ---
+// This is crucial to allow your Vercel frontend to call your Render backend
+app.use(cors({
+    origin: 'https://cori-tools.vercel.app' // This specifically allows your Vercel site
+}));
 
 // 2. Body parsers
 app.use(express.json());
