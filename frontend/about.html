@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - CORi</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Font: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Link to your new stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased">
+
+    <!-- Main wrapper for sticky footer -->
+    <div class="flex flex-col min-h-screen">
+
+        <!-- Header / Navigation -->
+        <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+            <nav class="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex-shrink-0">
+                    <a href="index.html" class="font-bold text-2xl text-teal-600 hover:text-teal-700 transition-colors">
+                        CORi
+                    </a>
+                </div>
+                
+                <!-- Navigation Links (Desktop) -->
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="index.html#tools" class="text-slate-600 hover:text-teal-600 font-medium transition-colors">PDF Tools</a>
+                    <a href="index.html#tools" class="text-slate-600 hover:text-teal-600 font-medium transition-colors">Image Tools</a>
+                    <a href="index.html#tools" class="text-slate-600 hover:text-teal-600 font-medium transition-colors">Video Tools</a>
+                    <a href="index.html#tools" class="text-slate-600 hover:text-teal-600 font-medium transition-colors">All Tools</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-slate-600 hover:text-teal-600 p-2 rounded-md">
+                        <span id="icon-menu"><i data-lucide="menu"></i></span>
+                        <span id="icon-x" class="hidden"><i data-lucide="x"></i></span>
+                    </button>
+                </div>
+            </nav>
+
+            <!-- Mobile Menu Panel (Hidden by default) -->
+            <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-slate-200">
+                <div class="px-4 pt-2 pb-4 space-y-2">
+                    <a href="index.html#tools" class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:bg-slate-100">PDF Tools</a>
+                    <a href="index.html#tools" class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:bg-slate-100">Image Tools</a>
+                    <a href="index.html#tools" class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:bg-slate-100">Video Tools</a>
+                    <a href="index.html#tools" class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:bg-slate-100">All Tools</a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="flex-grow py-16 md:py-24">
+            
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <h1 class="text-4xl md:text-5xl font-bold text-slate-900 mb-8 text-center">
+                    About CORi
+                </h1>
+                
+                <div class="content-prose bg-white p-8 md:p-12 rounded-lg shadow-sm">
+                    <h2>Our Mission</h2>
+                    <p>
+                        Welcome to CORi! Our mission is to provide simple, free, and accessible online tools for everyone. We believe that converting and editing files shouldn't be complicated or expensive. Whether you're a student, a professional, or just someone looking to convert a photo, our tools are designed to be fast, secure, and easy to use.
+                    </p>
+                    
+                    <h2>What We Do</h2>
+                    <p>
+                        CORi offers a growing suite of file conversion and editing tools. From converting PDFs to images, compressing files to save space, or merging documents, we're building a one-stop solution for all your digital document needs.
+                    </p>
+                    <p>
+                        Our platform is built on modern, secure technology. We prioritize your privacy, and all files uploaded to our servers are automatically deleted after a short period. Your data is never shared, sold, or looked at.
+                    </p>
+
+                    <h2>Our Story</h2>
+                    <p>
+                        CORi started as a small project to solve a simple problem: the lack of a reliable, free, and ad-light online file converter. Frustrated with existing solutions that were slow and cluttered, we decided to build our own. Today, CORi is growing to serve millions of users, but our core values remain the same: simplicity, security, and accessibility.
+                    </p>
+
+                    <h2>Get in Touch</h2>
+                    <p>
+                        We're always looking to improve and add new tools that you find useful. If you have any feedback, questions, or suggestions, please don't hesitate to <a href="contact.html" class="text-teal-600 hover:underline">contact us</a>.
+                    </p>
+                </div>
+
+            </div>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-slate-800 text-slate-300 py-12">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    
+                    <div>
+                        <a href="index.html" class="font-bold text-3xl text-white mb-2 inline-block">CORi</a>
+                        <p class="text-sm text-slate-400 leading-relaxed">
+                            Making file conversions simple and accessible for everyone. All tools are 100% free and secure.
+                        </p>
+                        <p class="text-xs text-slate-500 mt-6">
+                            &copy; 2025 CORi. All rights reserved.
+                        </p>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-white mb-3 tracking-wide">Popular Tools</h4>
+                        <ul class="space-y-2 text-sm">
+                            <li><a href="index.html#tools" class="hover:text-white transition-colors">PDF Converter</a></li>
+                            <li><a href="index.html#tools" class="hover:text-white transition-colors">Image Compressor</a></li>
+                            <li><a href="index.html#tools" class="hover:text-white transition-colors">Merge PDF Online</a></li>
+                            <li><a href="index.html#tools" class="hover:text-white transition-colors">Split PDF Free</a></li>
+                            <li><a href="index.html#tools" class="hover:text-white transition-colors">Convert JPG to PNG</a></li>
+                            <li><a href="index.html#tools" class="hover:text-white transition-colors">Word to PDF Converter</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-white mb-3 tracking-wide">Company</h4>
+                        <ul class="space-y-2 text-sm">
+                            <li><a href="about.html" class="hover:text-white transition-colors">About Us</a></li>
+                            <li><a href="privacy.html" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                            <li><a href="terms.html" class="hover:text-white transition-colors">Terms of Service</a></li>
+                            <li><a href="contact.html" class="hover:text-white transition-colors">Contact</a></li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </footer>
+
+    </div>
+    
+    <!-- Cookie Consent Banner -->
+    <div id="cookie-banner" class="hidden fixed bottom-0 left-0 right-0 bg-slate-900 text-white p-4 shadow-lg z-50 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <p class="text-sm text-slate-300">
+            We use cookies to ensure you get the best experience on our website.
+            <a href="privacy.html" class="font-medium underline hover:text-white">Learn more</a>.
+        </p>
+        <button id="accept-cookies" class="bg-teal-500 hover:bg-teal-600 text-white font-medium py-2 px-4 rounded-md transition-colors flex-shrink-0">
+            Accept
+        </button>
+    </div>
+
+    <!-- Link to your new main.js file -->
+    <script src="js/main.js" defer></script>
+
+</body>
+</html>
+
