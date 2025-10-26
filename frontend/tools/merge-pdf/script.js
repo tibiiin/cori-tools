@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // const API_URL = 'http://localhost:3001/api/merge';
     //
     // For production (after deploying backend to Render):
-    const API_URL = 'https://your-render-backend-url.onrender.com/api/merge';
+    const API_URL = 'https://cori-tools.onrender.com/api/merge';
     // =========================================================================
 
 
