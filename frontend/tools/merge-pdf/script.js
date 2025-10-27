@@ -1,12 +1,13 @@
 /**
  * This is the frontend (browser) JavaScript for the Merge PDF tool.
  * This version is corrected to match the element IDs in `index.html`.
+ * It now includes a one-time "cold start" warning.
  */
 document.addEventListener('DOMContentLoaded', () => {
     
     // --- IMPORTANT ---
     // Make sure this URL is correct for your deployed Render backend.
-    const API_URL = 'https://cori-tools.onrender.com/api/merge';
+    const API_URL = 'https://cori-tools.onrender.com/api/merge'; 
 
     // Get correct elements from index.html
     const mergeForm = document.getElementById('merge-form');
@@ -16,6 +17,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const loadingSpinner = document.getElementById('loading-spinner');
     const errorMessage = document.getElementById('error-message');
     const dropZone = document.querySelector('.drop-zone'); // For drag/drop styling
+    
+    // === NEW === Get the cold start message element
+    const coldStartMessage = document.getElementById('cold-start-message');
 
     let uploadedFiles = []; // To store the valid File objects
 
@@ -25,6 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
         uploadedFiles = [];
         fileListDisplay.innerHTML = '';
         hideError();
+        hideColdStartAlert(); // Hide on new file selection
 
         if (files.length > 0) {
             for (const file of files) {
@@ -159,6 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function showError(message) {
         errorMessage.textContent = message;
         errorMessage.classList.remove('hidden');
+        hideColdStartAlert(); // Also hide cold start alert on error
     }
 
     function hideError() {
@@ -166,14 +172,30 @@ document.addEventListener('DOMContentLoaded', () => {
         errorMessage.classList.add('hidden');
     }
 
+    // === NEW === Helper function to hide the cold start alert
+    function hideColdStartAlert() {
+        if (coldStartMessage) {
+            coldStartMessage.classList.add('hidden');
+        }
+    }
+
     function showLoading(isLoading) {
         if (isLoading) {
-            hideError();
+            hideError(); // Hide regular error
             mergeButton.classList.add('hidden'); // Hide the button
             loadingSpinner.classList.remove('hidden'); // Show the spinner
+
+            // === NEW === Check localStorage to see if we should show the alert
+            if (!localStorage.getItem('cori_cold_start_warned')) {
+                coldStartMessage.classList.remove('hidden');
+                // Set the flag in localStorage so it doesn't show again
+                localStorage.setItem('cori_cold_start_warned', 'true');
+            }
+
         } else {
             mergeButton.classList.remove('hidden'); // Show the button
             loadingSpinner.classList.add('hidden'); // Hide the spinner
+            hideColdStartAlert(); // Hide cold start alert when loading finishes
         }
     }
 
