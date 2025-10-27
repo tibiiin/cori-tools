@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- IMPORTANT ---
     // Make sure this URL is correct for your deployed Render backend.
-    const API_URL = 'https://cori-api.onrender.com/api/merge';
+    const API_URL = 'https://cori-tools.onrender.com/api/merge';
 
     // Get correct elements from index.html
     const mergeForm = document.getElementById('merge-form');
