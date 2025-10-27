@@ -3,16 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Merge PDF - CORi</title>
-    <!-- Tailwind CSS CDN -->
+    
+    <title>Merge PDF Files Free - Combine PDFs Online | CORi</title>
+    <meta name="description" content="Combine two or more PDF files into a single document for free. Our online PDF merger is fast, easy, and secure. No sign-up required.">
+
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Lucide Icons CDN -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <!-- Google Font: Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Link to *root* stylesheet -->
-    <!-- ../../ moves up two directories to the 'frontend' root -->
     <link rel="stylesheet" href="../../css/style.css">
 
     <style>
@@ -29,20 +27,16 @@
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased">
 
-    <!-- Main wrapper for sticky footer -->
     <div class="flex flex-col min-h-screen">
 
-        <!-- Header (Copied from index.html) -->
         <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
             <nav class="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
-                <!-- Logo -->
                 <div class="flex-shrink-0">
                     <a href="../../index.html" class="font-bold text-2xl text-teal-600 hover:text-teal-700 transition-colors">
                         CORi
                     </a>
                 </div>
                 
-                <!-- Navigation Links (Desktop) -->
                 <div class="hidden md:flex items-center space-x-6">
                     <a href="../../index.html#tools" class="text-slate-600 hover:text-teal-600 font-medium transition-colors">PDF Tools</a>
                     <a href="../../index.html#tools" class="text-slate-600 hover:text-teal-600 font-medium transition-colors">Image Tools</a>
@@ -50,7 +44,6 @@
                     <a href="../../index.html#tools" class="text-slate-600 hover:text-teal-600 font-medium transition-colors">All Tools</a>
                 </div>
 
-                <!-- Mobile Menu Button -->
                 <div class="md:hidden">
                     <button id="mobile-menu-button" class="text-slate-600 hover:text-teal-600 p-2 rounded-md">
                         <span id="icon-menu"><i data-lucide="menu"></i></span>
@@ -59,7 +52,6 @@
                 </div>
             </nav>
 
-            <!-- Mobile Menu Panel -->
             <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-slate-200">
                 <div class="px-4 pt-2 pb-4 space-y-2">
                     <a href="../../index.html#tools" class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:bg-slate-100">PDF Tools</a>
@@ -70,26 +62,21 @@
             </div>
         </header>
 
-        <!-- Main Tool Content -->
         <main class="flex-grow py-16 md:py-24">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl">
                 
-                <!-- Breadcrumb Link -->
                 <a href="../../index.html#tools" class="inline-flex items-center text-sm font-medium text-slate-500 hover:text-teal-600 transition-colors mb-4">
                     <i data-lucide="arrow-left" class="w-4 h-4 mr-2"></i>
                     Back to All Tools
                 </a>
                 
-                <!-- Tool Header -->
                 <h1 class="text-4xl md:text-5xl font-bold text-slate-900 mb-4">Merge PDF</h1>
                 <p class="text-lg text-slate-600 mb-8">
                     Combine two or more PDF files into a single document. Upload your files, reorder them if needed (feature coming soon!), and click Merge.
                 </p>
 
-                <!-- Tool UI -->
                 <form id="merge-form" class="bg-white p-8 rounded-lg shadow-sm">
                     
-                    <!-- File Drop Zone -->
                     <label for="file-input" class="drop-zone w-full p-12 flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-slate-300 cursor-pointer hover:border-teal-500 hover:bg-slate-50 transition-colors">
                         <i data-lucide="upload-cloud" class="w-16 h-16 text-slate-400 mb-4"></i>
                         <span class="text-xl font-medium text-slate-700">Drag & drop files here</span>
@@ -100,15 +87,11 @@
                         <input type="file" id="file-input" class="hidden" multiple accept="application/pdf">
                     </label>
 
-                    <!-- File List -->
                     <div id="file-list" class="mt-6 space-y-3">
-                        <!-- Files will be listed here by JavaScript -->
-                    </div>
+                        </div>
 
-                    <!-- Error Message -->
                     <div id="error-message" class="hidden mt-4 p-3 bg-red-100 text-red-700 rounded-lg"></div>
 
-                    <!-- Action Button -->
                     <div class="mt-8 text-center">
                         <button id="merge-button" type="submit" disabled 
                                 class="bg-teal-600 text-white font-bold py-4 px-10 rounded-lg text-lg inline-flex items-center justify-center
@@ -117,7 +100,6 @@
                             Merge PDF Files
                         </button>
                         
-                        <!-- Loading Spinner -->
                         <div id="loading-spinner" class="hidden mt-8 flex justify-center items-center">
                             <div class="w-10 h-10 border-4 border-teal-500 border-t-transparent rounded-full animate-spin"></div>
                             <span class="ml-4 text-slate-600 text-lg">Merging your files...</span>
@@ -125,10 +107,29 @@
                     </div>
                 </form>
 
-            </div>
+                <div class="content-prose bg-white p-8 md:p-12 rounded-lg shadow-sm mt-16">
+                    <h2>How to Merge PDF Files Online</h2>
+                    <ol class="list-decimal list-inside space-y-2">
+                        <li>Drag and drop your PDF files into the box above.</li>
+                        <li>Reorder the files as needed (feature coming soon!).</li>
+                        <li>Click the 'Merge PDF Files' button.</li>
+                        <li>Download your new, combined PDF instantly.</li>
+                    </ol>
+
+                    <h2>A Secure & Simple PDF Combiner</h2>
+                    <p>We care about your privacy. All files are processed securely on our servers and are automatically deleted after two hours. We never look at, copy, or share your files.</p>
+                    
+                    <h2>Frequently Asked Questions</h2>
+                    
+                    <h3>Is it free to merge PDFs?</h3>
+                    <p>Yes, our tool is 100% free. You can combine as many files as you like.</p>
+                    
+                    <h3>Do I need to install any software?</h3>
+                    <p>No, our PDF merger works entirely in your browser. There's nothing to download or install.</p>
+                </div>
+                </div>
         </main>
 
-        <!-- Footer (Copied from index.html) -->
         <footer class="bg-slate-800 text-slate-300 py-12">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -164,7 +165,6 @@
 
     </div>
     
-    <!-- Cookie Banner (Copied from index.html) -->
     <div id="cookie-banner" class="hidden fixed bottom-0 left-0 right-0 bg-slate-900 text-white p-4 shadow-lg z-50 flex flex-col sm:flex-row items-center justify-between gap-4">
         <p class="text-sm text-slate-300">
             We use cookies to ensure you get the best experience on our website.
@@ -175,10 +175,8 @@
         </button>
     </div>
 
-    <!-- Link to *root* main.js -->
     <script src="../../js/main.js" defer></script>
     
-    <!-- Link to this tool's specific script -->
     <script src="script.js" defer></script>
 </body>
 </html>
