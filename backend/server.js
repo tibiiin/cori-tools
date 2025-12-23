@@ -34,6 +34,10 @@ const { convertPdfToJpg } = require('./api/pdf-to-jpg');
 
 const { jpgToPdf } = require('./api/jpg-to-pdf'); // Import new handler
 
+const { convertPdfToWord } = require('./api/pdf-to-word'); // Import the new handler
+
+const { jpgToPng } = require('./api/jpg-to-png'); // Import handler
+
 // === API Routes ===
 
 // Root route for health check (good for Render)
@@ -52,7 +56,10 @@ app.post('/api/pdf-to-jpg', upload.single('file'), convertPdfToJpg);
 
 app.post('/api/jpg-to-pdf', upload.array('files'), jpgToPdf); // jpd to pdf
 
+app.post('/api/pdf-to-word', upload.single('file'), convertPdfToWord); // pdf to word
 
+// Add the JPG to PNG route
+app.post('/api/jpg-to-png', upload.single('file'), jpgToPng);
 // === Start Server ===
 app.listen(port, () => {
     console.log(`Server listening on port ${port}`);
