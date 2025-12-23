@@ -29,6 +29,9 @@ const upload = multer({
     limits: { fileSize: 100 * 1024 * 1024 } // 100MB file size limit
 });
 
+// Add to your existing imports
+const { convertPdfToJpg } = require('./api/pdf-to-jpg');
+
 // === API Routes ===
 
 // Root route for health check (good for Render)
@@ -40,6 +43,10 @@ app.get('/', (req, res) => {
 // It expects files to be sent under the field name 'files'
 // AND FIX IS HERE: We are now passing the 'mergePdfs' function, not the object
 app.post('/api/merge', upload.array('files'), mergePdfs);
+
+// Add this route below your merge route
+// Note: use 'upload.single' because we are processing one PDF at a time
+app.post('/api/pdf-to-jpg', upload.single('file'), convertPdfToJpg);
 
 // === Start Server ===
 app.listen(port, () => {
