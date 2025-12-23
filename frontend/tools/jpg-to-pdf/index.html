@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JPG to PDF - Convert Images to PDF Online | CORi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="../../css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased">
+    <div class="flex flex-col min-h-screen">
+        <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+            </header>
+
+        <main class="flex-grow py-16 md:py-24">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl">
+                <a href="../../index.html#tools" class="inline-flex items-center text-sm font-medium text-slate-500 hover:text-teal-600 mb-4">
+                    <i data-lucide="arrow-left" class="w-4 h-4 mr-2"></i> Back to All Tools
+                </a>
+                
+                <h1 class="text-4xl md:text-5xl font-bold text-slate-900 mb-4">JPG to PDF</h1>
+                <p class="text-lg text-slate-600 mb-8">
+                    Convert multiple JPG images into a single PDF. <strong>Drag files to reorder</strong> them before converting.
+                </p>
+
+                <form id="convert-form" class="bg-white p-8 rounded-lg shadow-sm">
+                    <label for="file-input" class="drop-zone w-full p-12 flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-slate-300 cursor-pointer hover:border-teal-500 hover:bg-slate-50 transition-colors">
+                        <i data-lucide="image" class="w-16 h-16 text-slate-400 mb-4"></i>
+                        <span class="text-xl font-medium text-slate-700">Drag & drop images here</span>
+                        <span class="bg-teal-600 text-white font-medium py-2 px-5 rounded-lg mt-4">Choose Images</span>
+                        <input type="file" id="file-input" class="hidden" multiple accept="image/jpeg">
+                    </label>
+
+                    <div id="file-list" class="mt-6 space-y-3 cursor-move"></div>
+
+                    <div id="error-message" class="hidden mt-4 p-3 bg-red-100 text-red-700 rounded-lg"></div>
+
+                    <div class="mt-8 text-center">
+                        <button id="convert-button" type="submit" disabled class="bg-teal-600 text-white font-bold py-4 px-10 rounded-lg text-lg hover:bg-teal-700 disabled:bg-slate-300">
+                            Convert to PDF
+                        </button>
+                        <div id="loading-spinner" class="hidden mt-8 flex justify-center items-center">
+                            <div class="w-10 h-10 border-4 border-teal-500 border-t-transparent rounded-full animate-spin"></div>
+                            <span class="ml-4 text-slate-600 text-lg">Creating your PDF...</span>
+                        </div>
+                    </div>
+                </form>
+                <div class="content-prose bg-white p-8 md:p-12 rounded-lg shadow-sm mt-16">
+    <h2>How to Convert JPG to PDF Online</h2>
+    <ol class="list-decimal list-inside space-y-2">
+        <li>Drag and drop your JPG images into the box above.</li>
+        <li><strong>Reorder your images</strong> by dragging them into your preferred sequence.</li>
+        <li>Click the 'Convert to PDF' button to start the process.</li>
+        <li>Download your high-quality, combined PDF document instantly.</li>
+    </ol>
+
+    <h2>A Secure & Simple Image to PDF Converter</h2>
+    <p>We care about your privacy. All files are processed securely on our servers and are automatically deleted after two hours. We never look at, copy, or share your files with anyone.</p>
+    
+    <h2>Frequently Asked Questions</h2>
+    
+    <h3>Is it free to convert JPG to PDF?</h3>
+    <p>Yes, all tools on CORi are 100% free. You can convert as many images as you like without hidden fees or account registration.</p>
+    
+    <h3>Can I reorder the images before converting?</h3>
+    <p>Absolutely. Our tool allows you to drag and drop your uploaded images to ensure they appear in the exact order you want in the final PDF.</p>
+    
+    <h3>Do I need to install any software?</h3>
+    <p>No. CORi is a completely online tool that works directly in your web browser. You don't need to download or install anything on your computer or phone.</p>
+</div>
+            </div>
+        </main>
+    </div>
+    <script src="script.js" defer></script>
+</body>
+</html>

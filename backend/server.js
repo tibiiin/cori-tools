@@ -32,6 +32,8 @@ const upload = multer({
 // Add to your existing imports
 const { convertPdfToJpg } = require('./api/pdf-to-jpg');
 
+const { jpgToPdf } = require('./api/jpg-to-pdf'); // Import new handler
+
 // === API Routes ===
 
 // Root route for health check (good for Render)
