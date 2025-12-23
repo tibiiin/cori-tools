@@ -38,6 +38,14 @@ const { convertPdfToWord } = require('./api/pdf-to-word'); // Import the new han
 
 const { jpgToPng } = require('./api/jpg-to-png'); // Import handler
 
+const { pngToJpg } = require('./api/png-to-jpg'); // Import handler
+
+const { compressImage } = require('./api/compress-image'); // Import handler
+
+const { wordToPdf } = require('./api/word-to-pdf');
+
+const { organizePdf } = require('./api/organize-pdf');
+
 // === API Routes ===
 
 // Root route for health check (good for Render)
@@ -60,6 +68,16 @@ app.post('/api/pdf-to-word', upload.single('file'), convertPdfToWord); // pdf to
 
 // Add the JPG to PNG route
 app.post('/api/jpg-to-png', upload.single('file'), jpgToPng);
+
+app.post('/api/png-to-jpg', upload.single('file'), pngToJpg);
+
+app.post('/api/compress-image', upload.single('file'), compressImage);
+
+app.post('/api/word-to-pdf', upload.single('file'), wordToPdf);
+
+app.post('/api/organize-pdf', upload.any(), organizePdf);
+
+
 // === Start Server ===
 app.listen(port, () => {
     console.log(`Server listening on port ${port}`);
