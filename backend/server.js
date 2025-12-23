@@ -46,6 +46,7 @@ const { wordToPdf } = require('./api/word-to-pdf');
 
 const { organizePdf } = require('./api/organize-pdf');
 
+const { cropPdf } = require('./api/crop-pdf');
 // === API Routes ===
 
 // Root route for health check (good for Render)
@@ -77,7 +78,7 @@ app.post('/api/word-to-pdf', upload.single('file'), wordToPdf);
 
 app.post('/api/organize-pdf', upload.any(), organizePdf);
 
-
+app.post('/api/crop-pdf', upload.single('file'), cropPdf);
 // === Start Server ===
 app.listen(port, () => {
     console.log(`Server listening on port ${port}`);
