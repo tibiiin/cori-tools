@@ -50,6 +50,9 @@ app.post('/api/merge', upload.array('files'), mergePdfs);
 // Note: use 'upload.single' because we are processing one PDF at a time
 app.post('/api/pdf-to-jpg', upload.single('file'), convertPdfToJpg);
 
+app.post('/api/jpg-to-pdf', upload.array('files'), jpgToPdf); // jpd to pdf
+
+
 // === Start Server ===
 app.listen(port, () => {
     console.log(`Server listening on port ${port}`);
