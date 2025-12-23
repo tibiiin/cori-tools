@@ -1,16 +1,116 @@
-<h1 class="text-4xl font-bold text-slate-900 mb-4">PDF to JPG</h1>
-<p class="text-lg text-slate-600 mb-8">Convert your PDF pages into high-quality images instantly.</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MN79C1MGCF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-MN79C1MGCF');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>PDF to JPG - Convert PDF Pages to Images Online | CORi</title>
+    <meta name="description" content="Convert your PDF pages into high-quality JPG images for free. Our online PDF to JPG converter is fast and secure.">
 
-<form id="convert-form" class="bg-white p-8 rounded-lg shadow-sm">
-    <label for="file-input" class="drop-zone w-full p-12 flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-slate-300 cursor-pointer">
-        <i data-lucide="file-image" class="w-16 h-16 text-slate-400 mb-4"></i>
-        <span class="bg-teal-600 text-white font-medium py-2 px-5 rounded-lg">Choose PDF File</span>
-        <input type="file" id="file-input" class="hidden" accept="application/pdf">
-    </label>
-    <div id="file-list" class="mt-6"></div>
-    <div class="mt-8 text-center">
-        <button id="convert-button" type="submit" disabled class="bg-teal-600 text-white font-bold py-4 px-10 rounded-lg">
-            Convert to JPG
-        </button>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../../css/style.css">
+
+    <style>
+        .drop-zone {
+            border: 2px dashed #cbd5e1; /* slate-300 */
+            transition: all 0.3s ease;
+        }
+        .drop-zone.drag-over {
+            border-color: #0d9488; /* teal-600 */
+            background-color: #f0fdfa; /* teal-50 */
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased">
+
+    <div class="flex flex-col min-h-screen">
+        <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+            <nav class="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
+                <div class="flex-shrink-0">
+                    <a href="../../index.html" class="font-bold text-2xl text-teal-600 hover:text-teal-700 transition-colors">CORi</a>
+                </div>
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="../../index.html#tools" class="text-slate-600 hover:text-teal-600 font-medium transition-colors">PDF Tools</a>
+                    <a href="../../index.html#tools" class="text-slate-600 hover:text-teal-600 font-medium transition-colors">Image Tools</a>
+                    <a href="../../index.html#tools" class="text-slate-600 hover:text-teal-600 font-medium transition-colors">Video Tools</a>
+                    <a href="../../index.html#tools" class="text-slate-600 hover:text-teal-600 font-medium transition-colors">All Tools</a>
+                </div>
+            </nav>
+        </header>
+
+        <main class="flex-grow py-16 md:py-24">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl">
+                
+                <a href="../../index.html#tools" class="inline-flex items-center text-sm font-medium text-slate-500 hover:text-teal-600 transition-colors mb-4">
+                    <i data-lucide="arrow-left" class="w-4 h-4 mr-2"></i>
+                    Back to All Tools
+                </a>
+                
+                <h1 class="text-4xl md:text-5xl font-bold text-slate-900 mb-4">PDF to JPG</h1>
+                <p class="text-lg text-slate-600 mb-8">
+                    Convert your PDF pages into high-quality JPG images instantly. Upload your file and click Convert.
+                </p>
+
+                <form id="convert-form" class="bg-white p-8 rounded-lg shadow-sm">
+                    <label for="file-input" class="drop-zone w-full p-12 flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-slate-300 cursor-pointer hover:border-teal-500 hover:bg-slate-50 transition-colors">
+                        <i data-lucide="file-image" class="w-16 h-16 text-slate-400 mb-4"></i>
+                        <span class="text-xl font-medium text-slate-700">Drag & drop PDF here</span>
+                        <span class="text-slate-500 my-2">or</span>
+                        <span class="bg-teal-600 text-white font-medium py-2 px-5 rounded-lg">Choose File</span>
+                        <input type="file" id="file-input" class="hidden" accept="application/pdf">
+                    </label>
+
+                    <div id="file-list" class="mt-6 space-y-3"></div>
+                    <div id="error-message" class="hidden mt-4 p-3 bg-red-100 text-red-700 rounded-lg"></div>
+                    
+                    <div id="cold-start-message" class="hidden mt-4 p-3 bg-blue-100 text-blue-700 rounded-lg">
+                        <span class="font-bold">Please Note:</span> Our server may take up to 30 seconds to wake up for the first conversion of the day.
+                    </div>
+
+                    <div class="mt-8 text-center">
+                        <button id="convert-button" type="submit" disabled 
+                                class="bg-teal-600 text-white font-bold py-4 px-10 rounded-lg text-lg inline-flex items-center justify-center hover:bg-teal-700 transition-colors disabled:bg-slate-300 disabled:cursor-not-allowed">
+                            Convert to JPG
+                        </button>
+                        <div id="loading-spinner" class="hidden mt-8 flex justify-center items-center">
+                            <div class="w-10 h-10 border-4 border-teal-500 border-t-transparent rounded-full animate-spin"></div>
+                            <span class="ml-4 text-slate-600 text-lg">Processing your PDF...</span>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="content-prose bg-white p-8 md:p-12 rounded-lg shadow-sm mt-16">
+                    <h2>How to Convert PDF to JPG Online</h2>
+                    <ol class="list-decimal list-inside space-y-2">
+                        <li>Upload the PDF file you want to convert.</li>
+                        <li>Click the 'Convert to JPG' button.</li>
+                        <li>Download your high-quality image files instantly.</li>
+                    </ol>
+                    <h2>Secure & Privacy-Focused</h2>
+                    <p>Your files are processed securely and deleted automatically after two hours. We never store or share your data.</p>
+                </div>
+            </div>
+        </main>
+
+        <footer class="bg-slate-800 text-slate-300 py-12">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center md:text-left">
+                <a href="../../index.html" class="font-bold text-3xl text-white mb-2 inline-block">CORi</a>
+                <p class="text-sm text-slate-400">&copy; 2025 CORi. All rights reserved.</p>
+            </div>
+        </footer>
     </div>
-</form>
+
+    <script src="../../js/main.js" defer></script>
+    <script src="script.js" defer></script>
+</body>
+</html>

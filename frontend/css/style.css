@@ -49,3 +49,19 @@ body {
     margin-left: 1.5rem;
     margin-bottom: 1rem;
 }
+/* Custom styles for the file drop zone */
+.drop-zone {
+    border: 2px dashed #cbd5e1; /* slate-300 */
+    transition: all 0.3s ease;
+}
+
+.drop-zone.drag-over {
+    border-color: #0d9488; /* teal-600 */
+    background-color: #f0fdfa; /* teal-50 */
+    transform: scale(1.02);
+}
+
+/* Ensure icons align correctly */
+[data-lucide] {
+    display: inline-block;
+}
