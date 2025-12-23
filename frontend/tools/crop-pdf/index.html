@@ -35,7 +35,26 @@
                     <div class="overflow-hidden rounded border border-slate-200">
                         <img id="pdf-preview" class="max-w-full">
                     </div>
+                    <div id="pagination" class="flex items-center justify-center space-x-4 mb-4 bg-slate-100 p-2 rounded-lg">
+                        <button id="prev-page" class="p-2 hover:bg-slate-200 rounded disabled:opacity-30"><i data-lucide="chevron-left"></i></button>
+                        <span class="text-sm font-medium">Page <span id="current-page-num">1</span> of <span id="total-pages">1</span></span>
+                        <button id="next-page" class="p-2 hover:bg-slate-200 rounded disabled:opacity-30"><i data-lucide="chevron-right"></i></button>
+                    </div>
                 </div>
+
+                <section class="mt-12 border-t border-slate-200 pt-8 text-slate-600">
+    <h2 class="text-xl font-bold text-slate-900 mb-4">How to Crop PDF Pages</h2>
+    <div class="grid md:grid-cols-2 gap-6 text-sm">
+        <div class="flex gap-3">
+            <div class="bg-teal-100 text-teal-700 w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 font-bold">1</div>
+            <p><strong>Upload & Navigate:</strong> Upload your PDF and use the arrows to find the specific page you want to crop.</p>
+        </div>
+        <div class="flex gap-3">
+            <div class="bg-teal-100 text-teal-700 w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 font-bold">2</div>
+            <p><strong>Select & Download:</strong> Draw a box over the area you want to keep. Only the selected area on that specific page will be preserved in the output.</p>
+        </div>
+    </div>
+    </section>
             </div>
         </main>
     </div>

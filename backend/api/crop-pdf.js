@@ -6,22 +6,19 @@ const cropPdf = async (req, res) => {
             return res.status(400).send('No PDF file uploaded.');
         }
 
-        // Get crop coordinates from the request body
-        // Coordinates should be in points (1/72 inch)
-        const { x, y, width, height } = JSON.parse(req.body.coordinates);
+        // Parse coordinates and the specific page index from the frontend
+        const { x, y, width, height, pageIndex } = JSON.parse(req.body.coordinates);
 
         const pdfDoc = await PDFDocument.load(req.file.buffer);
         const pages = pdfDoc.getPages();
 
-        pages.forEach((page) => {
-            // In PDF coordinate systems, (0,0) is bottom-left
-            // We need to convert from top-left (UI standard) if necessary
-            const { width: pageWidth, height: pageHeight } = page.getSize();
+        if (pageIndex > 0 && pageIndex <= pages.length) {
+            const page = pages[pageIndex - 1]; // Convert 1-based index to 0-based
             
-            // Set the new crop box
-            // x, y, width, height
+            // PDF-lib uses points (72 DPI). Ensure your frontend handles this scale.
+            // setCropBox(x, y, width, height)
             page.setCropBox(x, y, width, height);
-        });
+        }
 
         const pdfBytes = await pdfDoc.save();
         res.setHeader('Content-Type', 'application/pdf');
